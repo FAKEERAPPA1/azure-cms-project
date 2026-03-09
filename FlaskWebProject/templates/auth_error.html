@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Authentication Error - Article CMS{% endblock %}
+
+{% block extra_css %}
+<style>
+    .error-container {
+        max-width: 600px;
+        margin: 3rem auto;
+        background: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    .error-icon {
+        font-size: 4rem;
+        color: #dc3545;
+        margin-bottom: 1rem;
+    }
+    .error-container h2 {
+        color: #dc3545;
+        margin-bottom: 1rem;
+    }
+    .error-message {
+        color: #666;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+    .error-details {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1.5rem;
+        text-align: left;
+    }
+    .error-details pre {
+        margin: 0;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-size: 0.9rem;
+        color: #495057;
+    }
+    .btn-home {
+        display: inline-block;
+        padding: 0.75rem 2rem;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+    .btn-home:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-icon">⚠️</div>
+    <h2>Authentication Error</h2>
+    <p class="error-message">
+        We encountered an error while trying to authenticate you with Microsoft.
+        Please try again or use the standard login method.
+    </p>
+    
+    {% if result %}
+    <div class="error-details">
+        <strong>Error Details:</strong>
+        <pre>{{ result | tojson(indent=2) }}</pre>
+    </div>
+    {% endif %}
+    
+    <a href="{{ url_for('login') }}" class="btn-home">Back to Login</a>
+</div>
+{% endblock %}

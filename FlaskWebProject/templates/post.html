@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - Article CMS{% endblock %}
+
+{% block extra_css %}
+<style>
+    .post-form-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .post-form-container h2 {
+        margin-bottom: 1.5rem;
+        color: #333;
+    }
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #555;
+        font-weight: bold;
+    }
+    .form-group input[type="text"],
+    .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-family: Arial, sans-serif;
+    }
+    .form-group textarea {
+        min-height: 200px;
+        resize: vertical;
+    }
+    .form-group input[type="file"] {
+        padding: 0.5rem 0;
+    }
+    .current-image {
+        margin-top: 0.5rem;
+        max-width: 300px;
+        border-radius: 4px;
+    }
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+    .btn-save {
+        padding: 0.75rem 2rem;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+    .btn-save:hover {
+        background-color: #218838;
+    }
+    .btn-cancel {
+        padding: 0.75rem 2rem;
+        background-color: #6c757d;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        display: inline-block;
+    }
+    .btn-cancel:hover {
+        background-color: #545b62;
+    }
+    .error {
+        color: #dc3545;
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="post-form-container">
+    <h2>{{ title }}</h2>
+    
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.title.label }}
+            {{ form.title(size=64) }}
+            {% if form.title.errors %}
+                {% for error in form.title.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.author.label }}
+            {{ form.author(size=64) }}
+            {% if form.author.errors %}
+                {% for error in form.author.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.body.label }}
+            {{ form.body() }}
+            {% if form.body.errors %}
+                {% for error in form.body.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.image_path.label }}
+            {{ form.image_path() }}
+            {% if form.image_path.errors %}
+                {% for error in form.image_path.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+            {% if imageSource %}
+                <p style="margin-top: 0.5rem; color: #666;">Current image:</p>
+                <img src="{{ imageSource }}" alt="Current image" class="current-image">
+            {% endif %}
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn-save">{{ form.submit.label.text }}</button>
+            <a href="{{ url_for('home') }}" class="btn-cancel">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
