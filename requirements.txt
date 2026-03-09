@@ -11,3 +11,4 @@ python-dotenv==1.0.0
 Werkzeug==2.3.0
 pyOpenSSL==23.2.0
 gunicorn==21.2.0
+six==1.16.0
